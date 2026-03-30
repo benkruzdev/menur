@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Genel Ayarlar */
+.ben-kruz-header {
+    width: 100%;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    z-index: 999;
+}
+
+.ben-kruz-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%; 
+}
+
+/* Logo */
+.ben-kruz-logo a { display: block; line-height: 0; }
+.ben-kruz-logo img { height: auto; }
+
+/* Desktop Menü */
+.ben-kruz-nav-desktop ul { display: flex; margin: 0; padding: 0; list-style: none; align-items: center; }
+.ben-kruz-nav-desktop a { text-decoration: none; position: relative; display: flex; align-items: center; transition: color 0.3s; }
+
+/* Badge (YENİ) */
+.ben-kruz-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Butonlar */
+.ben-kruz-cta-desktop { display: flex; align-items: center; }
+.bkm-btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+}
+
+/* Varsayılan Renkler */
+.bkm-btn-outline { background: transparent; border-color: #ccc; color: #333; }
+.bkm-btn-primary { background: #333; border-color: #333; color: #fff; }
+
+/* Mobile Toggle */
+.ben-kruz-mobile-toggle {
+    display: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+.ben-kruz-mobile-toggle svg { width: 1em; height: 1em; fill: currentColor; }
+
+/* Mobile Menu Drawer */
+.ben-kruz-mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    border: none !important;
+}
+.ben-kruz-mobile-menu.active { max-height: 600px; }
+
+/* Mobile İç Kapsayıcı - Padding Elementor'dan gelecek */
+.mobile-menu-inner { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+    /* Padding CSS'ten silindi */
+}
+
+/* Listelerdeki tarayıcı varsayılan girintisini sıfırla */
+.mobile-links { 
+    list-style: none; 
+    padding: 0 !important; 
+    margin: 0 !important; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+.mobile-links li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mobile-links a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Mobile CTA Buttons */
+.mobile-cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: none !important;
+}
+
+.full-width { width: 100%; box-sizing: border-box; }
+
+/* Responsive */
+@media (max-width: 992px) {
+    .ben-kruz-nav-desktop, .ben-kruz-cta-desktop { display: none; }
+    .ben-kruz-mobile-toggle { display: flex; }
+}
+@media (min-width: 993px) {
+    .ben-kruz-mobile-menu { display: none !important; }
+}
