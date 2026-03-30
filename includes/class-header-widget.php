@@ -94,10 +94,34 @@ class Ben_Kruz_Header_Widget extends Widget_Base {
             'section_buttons_content',
             [ 'label' => esc_html__( 'Butonlar (CTA)', 'ben-kruz-menu' ), 'tab' => Controls_Manager::TAB_CONTENT ]
         );
-        $this->add_control( 'btn1_text', [ 'label' => 'Buton 1 (Outline) Metni', 'type' => Controls_Manager::TEXT, 'default' => 'Giriş Yap' ] );
-        $this->add_control( 'btn1_link', [ 'label' => 'Buton 1 Link', 'type' => Controls_Manager::URL, 'default' => [ 'url' => '#' ] ] );
-        $this->add_control( 'btn2_text', [ 'label' => 'Buton 2 (Solid) Metni', 'type' => Controls_Manager::TEXT, 'default' => 'Kayıt Ol' ] );
-        $this->add_control( 'btn2_link', [ 'label' => 'Buton 2 Link', 'type' => Controls_Manager::URL, 'default' => [ 'url' => '#' ] ] );
+        $cta_repeater = new \Elementor\Repeater();
+        $cta_repeater->add_control( 'text', [ 'label' => 'Sekme Metni', 'type' => Controls_Manager::TEXT, 'default' => 'Yeni Sekme' ] );
+        $cta_repeater->add_control( 'link', [ 'label' => 'Sekme Linki', 'type' => Controls_Manager::URL, 'default' => [ 'url' => '#' ] ] );
+        $cta_repeater->add_control(
+            'style',
+            [
+                'label' => 'Sekme Stili',
+                'type' => Controls_Manager::SELECT,
+                'default' => 'outline',
+                'options' => [
+                    'outline' => 'Outline',
+                    'primary' => 'Solid',
+                ],
+            ]
+        );
+        $this->add_control(
+            'cta_items',
+            [
+                'label' => 'Sekmeler',
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $cta_repeater->get_controls(),
+                'default' => [
+                    [ 'text' => 'Giriş Yap', 'link' => [ 'url' => '#' ], 'style' => 'outline' ],
+                    [ 'text' => 'Kayıt Ol', 'link' => [ 'url' => '#' ], 'style' => 'primary' ],
+                ],
+                'title_field' => '{{{ text }}}',
+            ]
+        );
         $this->end_controls_section();
 
         // Mobil İkonlar
@@ -331,8 +355,12 @@ class Ben_Kruz_Header_Widget extends Widget_Base {
                     </ul>
                 </nav>
                 <div class="ben-kruz-cta-desktop">
-                    <?php if(!empty($settings['btn1_text'])) : ?><a href="<?php echo esc_url($settings['btn1_link']['url']); ?>" class="bkm-btn bkm-btn-outline"><?php echo esc_html($settings['btn1_text']); ?></a><?php endif; ?>
-                    <?php if(!empty($settings['btn2_text'])) : ?><a href="<?php echo esc_url($settings['btn2_link']['url']); ?>" class="bkm-btn bkm-btn-primary"><?php echo esc_html($settings['btn2_text']); ?></a><?php endif; ?>
+                    <?php foreach ( $settings['cta_items'] as $cta_item ) : ?>
+                        <?php if ( ! empty( $cta_item['text'] ) ) : ?>
+                            <?php $cta_style_class = ( isset( $cta_item['style'] ) && 'primary' === $cta_item['style'] ) ? 'bkm-btn-primary' : 'bkm-btn-outline'; ?>
+                            <a href="<?php echo esc_url( $cta_item['link']['url'] ); ?>" class="bkm-btn <?php echo esc_attr( $cta_style_class ); ?>"><?php echo esc_html( $cta_item['text'] ); ?></a>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </div>
                 <div class="ben-kruz-mobile-toggle">
                     <div class="bkm-icon-open"><?php Icons_Manager::render_icon( $settings['icon_open'], [ 'aria-hidden' => 'true' ] ); ?></div>
@@ -352,8 +380,12 @@ class Ben_Kruz_Header_Widget extends Widget_Base {
                         <?php endforeach; ?>
                     </ul>
                     <div class="mobile-cta-buttons">
-                        <?php if(!empty($settings['btn1_text'])) : ?><a href="<?php echo esc_url($settings['btn1_link']['url']); ?>" class="bkm-btn bkm-btn-outline full-width"><?php echo esc_html($settings['btn1_text']); ?></a><?php endif; ?>
-                        <?php if(!empty($settings['btn2_text'])) : ?><a href="<?php echo esc_url($settings['btn2_link']['url']); ?>" class="bkm-btn bkm-btn-primary full-width"><?php echo esc_html($settings['btn2_text']); ?></a><?php endif; ?>
+                        <?php foreach ( $settings['cta_items'] as $cta_item ) : ?>
+                            <?php if ( ! empty( $cta_item['text'] ) ) : ?>
+                                <?php $cta_style_class = ( isset( $cta_item['style'] ) && 'primary' === $cta_item['style'] ) ? 'bkm-btn-primary' : 'bkm-btn-outline'; ?>
+                                <a href="<?php echo esc_url( $cta_item['link']['url'] ); ?>" class="bkm-btn <?php echo esc_attr( $cta_style_class ); ?> full-width"><?php echo esc_html( $cta_item['text'] ); ?></a>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
